@@ -1,0 +1,20 @@
+{
+    "name": "UGF.Time.Editor.Tests",
+    "references": [
+        "GUID:f3ae43c93be1e5948b684222a4f31baa",
+        "GUID:01ec3ecc0711d7e4abfea2ecf76e869e"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

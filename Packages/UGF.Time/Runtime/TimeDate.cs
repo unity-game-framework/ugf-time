@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace Packages.UGF.Time.Runtime
+namespace UGF.Time.Runtime
 {
     [Serializable]
     public struct TimeDate : IEquatable<TimeDate>, IComparable<TimeDate>
