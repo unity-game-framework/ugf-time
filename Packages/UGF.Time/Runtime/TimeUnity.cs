@@ -1,5 +1,8 @@
 namespace UGF.Time.Runtime
 {
+    /// <summary>
+    /// Represents access to the Unity time.
+    /// </summary>
     public class TimeUnity : ITime
     {
         public float Scale { get { return UnityEngine.Time.timeScale; } set { UnityEngine.Time.timeScale = value; } }
