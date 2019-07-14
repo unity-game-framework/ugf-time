@@ -19,7 +19,15 @@ namespace UGF.Time.Runtime.Tests
         {
             TimeTicks ticks = TimeTicks.FromSeconds(0.0000001F);
 
-            Assert.AreEqual(1, ticks.Value);
+            Assert.AreEqual(1L, ticks.Value);
+        }
+
+        [Test]
+        public void OneTickSeconds()
+        {
+            TimeTicks ticks = TimeTicks.FromTicks(1L);
+
+            Assert.AreEqual(0.0000001F, ticks.TotalSeconds);
         }
     }
 }

@@ -10,14 +10,15 @@ namespace UGF.Time.Runtime
         [SerializeField] private long m_value;
 
         public long Value { get { return m_value; } }
-        public float TotalSeconds { get { return m_value * k_secondsPerTick; } }
+        public float TotalSeconds { get { return m_value * SecondsPerTick; } }
         public TimeSpan AsTimeSpan { get { return this; } }
 
         public static readonly TimeTicks Zero = new TimeTicks(0L);
         public static readonly TimeTicks MinValue = new TimeTicks(long.MinValue);
         public static readonly TimeTicks MaxValue = new TimeTicks(long.MaxValue);
 
-        private const float k_secondsPerTick = 1.0F / TimeSpan.TicksPerSecond;
+        public const long TicksPerSecond = TimeSpan.TicksPerSecond;
+        public const float SecondsPerTick = 1.0F / TicksPerSecond;
 
         [StructLayout(LayoutKind.Explicit)]
         private struct Converter
@@ -51,9 +52,14 @@ namespace UGF.Time.Runtime
             return m_value.CompareTo(other.m_value);
         }
 
+        public static TimeTicks FromTicks(long ticks)
+        {
+            return new TimeTicks(ticks);
+        }
+
         public static TimeTicks FromSeconds(float seconds)
         {
-            return new TimeTicks((long)(seconds * TimeSpan.TicksPerSecond));
+            return new TimeTicks((long)(seconds * TicksPerSecond));
         }
 
         public static bool operator ==(TimeTicks left, TimeTicks right)
@@ -142,7 +148,7 @@ namespace UGF.Time.Runtime
 
         public override string ToString()
         {
-            return m_value.ToString();
+            return AsTimeSpan.ToString("G");
         }
     }
 }

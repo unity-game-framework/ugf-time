@@ -11,7 +11,7 @@ namespace UGF.Time.Runtime
 
         public ulong Value { get { return m_value; } }
         public long Ticks { get { return (long)(m_value & k_ticksMask); } }
-        public float TotalSeconds { get { return (long)(m_value & k_ticksMask) * k_secondsPerTick; } }
+        public float TotalSeconds { get { return (long)(m_value & k_ticksMask) * SecondsPerTick; } }
         public DateTime AsDateTime { get { return this; } }
 
         public static TimeDate Now { get { return DateTime.Now; } }
@@ -20,11 +20,12 @@ namespace UGF.Time.Runtime
         public static readonly TimeDate MinValue = new TimeDate(MinTicks);
         public static readonly TimeDate MaxValue = new TimeDate(MaxTicks);
 
+        public const long TicksPerSecond = TimeSpan.TicksPerSecond;
+        public const float SecondsPerTick = 1.0F / TicksPerSecond;
         public const long MinTicks = 0L;
         public const long MaxTicks = 3155378975999999999L;
 
         private const ulong k_ticksMask = 0x3FFFFFFFFFFFFFFF;
-        private const float k_secondsPerTick = 1.0F / TimeSpan.TicksPerSecond;
 
         [StructLayout(LayoutKind.Explicit)]
         private struct Converter
@@ -36,14 +37,6 @@ namespace UGF.Time.Runtime
         public TimeDate(ulong value)
         {
             m_value = value;
-        }
-
-        public TimeDate(long ticks)
-        {
-            if (ticks < MinTicks) throw new ArgumentException("The specified ticks can not be less than zero.", nameof(ticks));
-            if (ticks > MaxTicks) throw new ArgumentException("The specified ticks can not be greater than max ticks.", nameof(ticks));
-
-            m_value = (ulong)ticks;
         }
 
         public bool Equals(TimeDate other)
@@ -66,9 +59,23 @@ namespace UGF.Time.Runtime
             return m_value.CompareTo(other.m_value);
         }
 
+        public static TimeDate FromTicks(long ticks)
+        {
+            if (ticks < MinTicks) throw new ArgumentException("The specified ticks can't be less than zero.", nameof(ticks));
+            if (ticks > MaxTicks) throw new ArgumentException("The specified ticks can't be greater than max ticks.", nameof(ticks));
+
+            return new TimeDate((ulong)ticks);
+        }
+
         public static TimeDate FromSeconds(float seconds)
         {
-            return new TimeDate((long)(seconds * TimeSpan.TicksPerSecond));
+            if (seconds < 0F) throw new ArgumentException("The specified seconds can't be less than zero.", nameof(seconds));
+
+            long ticks = (long)(seconds * TicksPerSecond);
+
+            if (ticks > MaxTicks) throw new ArgumentException("The specified seconds can't be greater than max ticks.", nameof(seconds));
+
+            return new TimeDate((ulong)ticks);
         }
 
         public static bool operator ==(TimeDate left, TimeDate right)
@@ -97,7 +104,7 @@ namespace UGF.Time.Runtime
 
         public override string ToString()
         {
-            return AsDateTime.ToString();
+            return AsDateTime.ToString("O");
         }
     }
 }

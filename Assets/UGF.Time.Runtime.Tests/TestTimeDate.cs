@@ -19,7 +19,15 @@ namespace UGF.Time.Runtime.Tests
         {
             TimeDate date = TimeDate.FromSeconds(0.0000001F);
 
-            Assert.AreEqual(1, date.Ticks);
+            Assert.AreEqual(1L, date.Ticks);
+        }
+
+        [Test]
+        public void OneTickSeconds()
+        {
+            TimeDate date = TimeDate.FromTicks(1L);
+
+            Assert.AreEqual(0.0000001F, date.TotalSeconds);
         }
     }
 }
