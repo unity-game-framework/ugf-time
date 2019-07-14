@@ -1,0 +1,17 @@
+{
+    "name": "UGF.Time.Editor",
+    "references": [
+        "GUID:f3ae43c93be1e5948b684222a4f31baa"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
